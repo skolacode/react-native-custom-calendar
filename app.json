@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "react-native-custom-calendar",
-    "slug": "react-native-custom-calendar",
+    "name": "@skolacode/react-native-custom-calendar",
+    "slug": "@skolacode/react-native-custom-calendar",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
     ]
   },
-  "name": "react-native-custom-calendar"
+  "name": "@skolacode/react-native-custom-calendar"
 }
