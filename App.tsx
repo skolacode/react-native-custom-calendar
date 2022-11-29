@@ -1,11 +1,21 @@
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 
+import {COLORS} from './src/styles/colors';
 import {CustomCalendar} from './src/components';
 
 export default function App() {
   return (
-    <View style={{flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center'}}>
+    <View style={styles.container}>
       <CustomCalendar />
     </View>
   );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.white,
+  },
+});
