@@ -2,7 +2,7 @@
 
 <center>
 
-![plot](./icon.png)
+![Alt text](icon.png?raw=true "Icon")
 
 </center>
 
@@ -27,6 +27,7 @@ $ yarn add @skolacode/react-native-custom-calendar
 ## Usage
 
 ```
+import React from 'react';
 import {View} from 'react-native';
 import {CustomCalendar} from '@skolacode/react-native-custom-calendar'
 
@@ -56,8 +57,9 @@ const App = () => {
 ## Component Ref
 
 ```
-import {useEffect} from 'react';
-import {CustomCalendarRef} from '@skolacode/react-native-custom-calendar'
+import React, {useEffect} from 'react';
+import {View} from 'react-native';
+import {CustomCalendar, CustomCalendarRef} from '@skolacode/react-native-custom-calendar'
 
 const App = () => {
   useEffect(() => {
@@ -67,8 +69,9 @@ const App = () => {
   }, []);
   
   return (
-    <>
-    </>
+    <View>
+      <CustomCalendar />
+    </View>
   );
 };
 ```
