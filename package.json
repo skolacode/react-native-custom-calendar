@@ -1,12 +1,15 @@
 {
   "name": "@skolacode/react-native-custom-calendar",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
-  "main": "lib/index.tsx",
+  "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "/lib"
+    "lib/**/*"
   ],
+  "directories": {
+    "lib": "lib"
+  },
   "dependencies": {
     "@skolacode/calendar-js": "^1.0.0"
   },
