@@ -1,6 +1,6 @@
 {
   "name": "@skolacode/react-native-custom-calendar",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "license": "MIT",
   "description": "This will be an awesome custom calendar for React Native",
   "homepage": "https://github.com/skolacode/react-native-custom-calendar#readme",
@@ -15,8 +15,8 @@
     "custom"
   ],
 
-  "react-native": "src/index.js",
-  "main": "lib/module/index.js",
+  "react-native": "index.js",
+  "main": "index.js",
   "module": "lib/module/index.js",
   "types": "lib/typescript/index.d.ts",
   "files": [
