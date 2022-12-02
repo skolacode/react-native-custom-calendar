@@ -1,3 +1,6 @@
+# !! IMPORTANT
+** This project is still under development, please hold on tight guys. We will releae the first version end of **DEC 2022**
+
 # React Native Custom Calendar
 
 <center>
