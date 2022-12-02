@@ -43,6 +43,8 @@ export interface ICustomDayProps {
 }
 
 export interface ICustomCalendarProps {
+    date?: Date;
+    offsetMonth?: boolean;
     expand?: boolean;
     showNav?: boolean;
     customHeader?(props: ICustomHeaderProps): ReactElement;
