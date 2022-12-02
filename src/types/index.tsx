@@ -1,5 +1,5 @@
 import {ReactElement} from 'react';
-import {TDate} from '@skolacode/calendar-js';
+import {ICalendar, TDate} from '@skolacode/calendar-js';
 import {ViewComponent, ViewStyle, TextStyle, ImageStyle} from 'react-native';
 
 export type TNamedStyles = ViewStyle | TextStyle | ImageStyle;
@@ -23,7 +23,8 @@ export interface ICustomCalendarRef {
     expand(): void;
     collapse(): void;
     isExpanded(): boolean;
-    getSelectedDay(): TDate | null;
+    getCalendarDate(): ICalendar | {};
+    getSelectedDay(): TDate | {};
     navigatePrev(): void;
     navigateNext(): void;
     navigateMonth(month: TMonthNumber, year?: number): void;

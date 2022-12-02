@@ -11,7 +11,8 @@ const CustomCalendarRef: ICustomCalendarRef = {
   expand: () => {},
   collapse: () => {},
   isExpanded: () => false,
-  getSelectedDay: () => null,
+  getCalendarDate: () => ({}),
+  getSelectedDay: () => ({}),
   navigatePrev: () => {},
   navigateNext: () => {},
   navigateMonth: (month: TMonthNumber, year?: number) => {},
@@ -56,7 +57,7 @@ const CustomCalendar = ({
 
   const [expanded, setExpanded] = useState<boolean>(expand);
   const [showOffsetMonth, _setShowOffsetMonth] = useState<boolean>(offsetMonth);
-  const [selectedDay, setSelectedDay] = useState<TDate | null>(null);
+  const [selectedDay, setSelectedDay] = useState<TDate | {}>({});
   const [calendarObj, setCalendarObj] = useState<ICalendar>(getCalendar(month, year));
 
   const _handleNavigatePrev = () => {
@@ -80,6 +81,7 @@ const CustomCalendar = ({
       CustomCalendarRef.expand = () => setExpanded(true);
       CustomCalendarRef.collapse = () => setExpanded(false);
       CustomCalendarRef.isExpanded = () => expanded;
+      CustomCalendarRef.getCalendarDate = () => calendarObj;
       CustomCalendarRef.getSelectedDay = () => selectedDay;
       CustomCalendarRef.navigatePrev = () => _handleNavigatePrev();
       CustomCalendarRef.navigateNext = () => _handleNavigateNext();
