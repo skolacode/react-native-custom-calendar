@@ -26,7 +26,9 @@ $ yarn add @skolacode/react-native-custom-calendar
 
 ## Usage
 
-```
+![Alt text](demo.gif?raw=true "Demo")
+
+```javascript
 import React from 'react';
 import {View} from 'react-native';
 import {CustomCalendar} from '@skolacode/react-native-custom-calendar'
@@ -56,7 +58,7 @@ const App = () => {
 
 ## Component Ref
 
-```
+```javascript
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {CustomCalendar, CustomCalendarRef} from '@skolacode/react-native-custom-calendar'
