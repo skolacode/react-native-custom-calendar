@@ -29,7 +29,9 @@ $ yarn add @skolacode/react-native-custom-calendar
 
 ## Usage
 
-```
+![Alt text](demo.gif?raw=true "Demo")
+
+```javascript
 import React from 'react';
 import {View} from 'react-native';
 import {CustomCalendar} from '@skolacode/react-native-custom-calendar'
@@ -48,6 +50,8 @@ const App = () => {
 
 | Name         | Type         | Required | Default | Description                                                      |
 | ------------ | ------------ | -------- | ------- | ---------------------------------------------------------------- |
+| date         | Date         | No       | today   | The initial date to display active calendar                      |
+| offsetMonth  | Boolean      | No       | true    | Show the offset previous / next month within Monday to Sunday    |
 | expand       | Boolean      | No       | true    | The state of the calendar view, either expanded or collapsed     |
 | showNav      | Boolean      | No       | true    | Show the navigation buttons (only when header is not overwritten)|
 | customHeader | ReactElement | No       | -       | Custom component to override default header                      |
@@ -59,7 +63,7 @@ const App = () => {
 
 ## Component Ref
 
-```
+```javascript
 import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {CustomCalendar, CustomCalendarRef} from '@skolacode/react-native-custom-calendar'
@@ -81,15 +85,16 @@ const App = () => {
 
 Available properties & methods after component has mounted:
 
-| Name           | Type         | Return  | Description                                                 |
-| -------------- | ------------ | ------- | ----------------------------------------------------------- |
-| current        | ReactElement | Object  | The calendar element itself                                 |
-| expand         | Function     | Void    | Update the calendar to expanded state                       |
-| collapse       | Function     | Void    | Update the calendar to collapsed state                      |
-| isExpanded     | Function     | Boolean | Get current state (expanded / collapsed) of the calendar    |
-| getSelectedDay | Function     | Object  | Get details of current active selected day                  |
-| navigatePrev   | Function     | Void    | Navigate calendar to previous month                         |
-| navigateNext   | Function     | Void    | Navigate calendar to next month                             |
-| navigateMonth  | Function     | Void    | Navigate calendar to specific month                         |
+| Name            | Type         | Return  | Description                                                 |
+| --------------- | ------------ | ------- | ----------------------------------------------------------- |
+| current         | ReactElement | Object  | The calendar element itself                                 |
+| expand          | Function     | Void    | Update the calendar to expanded state                       |
+| collapse        | Function     | Void    | Update the calendar to collapsed state                      |
+| isExpanded      | Function     | Boolean | Get current state (expanded / collapsed) of the calendar    |
+| getCalendarDate | Function     | Object  | Get details of active current calendar for that month       |
+| getSelectedDay  | Function     | Object  | Get details of active selected day                          |
+| navigatePrev    | Function     | Void    | Navigate calendar to previous month                         |
+| navigateNext    | Function     | Void    | Navigate calendar to next month                             |
+| navigateMonth   | Function     | Void    | Navigate calendar to specific month                         |
 
 ---
