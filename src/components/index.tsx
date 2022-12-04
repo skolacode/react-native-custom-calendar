@@ -11,7 +11,8 @@ const CustomCalendarRef: ICustomCalendarRef = {
   expand: () => {},
   collapse: () => {},
   isExpanded: () => false,
-  getSelectedDay: () => null,
+  getCalendarDate: () => ({}),
+  getSelectedDay: () => ({}),
   navigatePrev: () => {},
   navigateNext: () => {},
   navigateMonth: (month: TMonthNumber, year?: number) => {},
@@ -36,13 +37,15 @@ const RenderDay = ({date, styles, show, handlePress}: ICustomDayProps) => {
 };
 
 const CustomCalendar = ({
+  date = new Date(),
+  offsetMonth = true,
   expand = true,
   showNav = true,
   customHeader = ({Header, Prev, Next}: ICustomHeaderProps) => <RenderHeader {...{Header, Prev, Next}} />,
   customDay = ({date, styles, show, handlePress}: ICustomDayProps) => <RenderDay {...{date, styles, show, handlePress}} />,
   handlePress = (date: TDate) => {},
 }: ICustomCalendarProps) => {
-  const currentDate = new Date();
+  const currentDate = date;
   /*
     -1 as array index starts from 0
   */
@@ -53,8 +56,8 @@ const CustomCalendar = ({
   const year = currentDate.getFullYear();
 
   const [expanded, setExpanded] = useState<boolean>(expand);
-  const [currentMonthOnly, _setCurrentMonthOnly] = useState<boolean>(true);
-  const [selectedDay, setSelectedDay] = useState<TDate | null>(null);
+  const [showOffsetMonth, _setShowOffsetMonth] = useState<boolean>(offsetMonth);
+  const [selectedDay, setSelectedDay] = useState<TDate | {}>({});
   const [calendarObj, setCalendarObj] = useState<ICalendar>(getCalendar(month, year));
 
   const _handleNavigatePrev = () => {
@@ -78,6 +81,7 @@ const CustomCalendar = ({
       CustomCalendarRef.expand = () => setExpanded(true);
       CustomCalendarRef.collapse = () => setExpanded(false);
       CustomCalendarRef.isExpanded = () => expanded;
+      CustomCalendarRef.getCalendarDate = () => calendarObj;
       CustomCalendarRef.getSelectedDay = () => selectedDay;
       CustomCalendarRef.navigatePrev = () => _handleNavigatePrev();
       CustomCalendarRef.navigateNext = () => _handleNavigateNext();
@@ -120,7 +124,7 @@ const CustomCalendar = ({
           return toRenderWeek && (
             <View key={`weekRow-${weekNo}`} style={styles.weekRow}>
               {week.map((date, _index) => {
-                const toRenderDay: boolean = currentMonthOnly ? date.isCurrentMonth : true;
+                const toRenderDay: boolean = !showOffsetMonth ? date.isCurrentMonth : true;
                 const dayEachStyles: TNamedStyles[] = [styles.dayEach];
                 const isToday: boolean = isThisWeek && date.day === day;
                 /* Append styling for today */
