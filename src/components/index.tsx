@@ -3,20 +3,11 @@ import {Pressable, Text, View} from 'react-native';
 import {getCalendar, ICalendar, TDate} from '@skolacode/calendar-js';
 
 import {styles} from '../styles';
+import {rand} from '../utils';
 import {dayNameInitial, monthName} from '../locale';
 import {ICustomCalendarProps, ICustomCalendarRef, ICustomHeaderProps, ICustomDayProps, TMonthNumber, TNamedStyles} from '../types';
 
-export let CustomCalendarRef: ICustomCalendarRef = {
-  current: null,
-  expand: () => {},
-  collapse: () => {},
-  isExpanded: () => false,
-  getCalendarDate: () => ({}),
-  getSelectedDay: () => ({}),
-  navigatePrev: () => {},
-  navigateNext: () => {},
-  navigateMonth: (month: TMonthNumber, year?: string | number) => {},
-};
+export let CustomCalendarRef: ICustomCalendarRef = {};
 
 const RenderHeader = ({Header, Prev, Next}: any) => {
   return (
@@ -37,6 +28,7 @@ const RenderDay = ({date, styles, show, handlePress}: any) => {
 };
 
 export const CustomCalendar = ({
+  id = `${rand(1000000, 9999999)}`,
   date = new Date(),
   offsetMonth = true,
   expand = true,
@@ -61,8 +53,8 @@ export const CustomCalendar = ({
 
   const _handleNavigatePrev = () => {
     const getCalendarObj = getCalendar(calendarObj.previous.month, calendarObj.previous.year);
-    CustomCalendarRef.getCalendarDate = () => getCalendarObj;
-    CustomCalendarRef.isExpanded = () => true;
+    CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
+    CustomCalendarRef[id].isExpanded = () => true;
 
     setCalendarObj(getCalendarObj);
     setExpanded(true);
@@ -70,15 +62,15 @@ export const CustomCalendar = ({
 
   const _handleNavigateNext = () => {
     const getCalendarObj = getCalendar(calendarObj.next.month, calendarObj.next.year);
-    CustomCalendarRef.getCalendarDate = () => getCalendarObj;
-    CustomCalendarRef.isExpanded = () => true;
+    CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
+    CustomCalendarRef[id].isExpanded = () => true;
 
     setCalendarObj(getCalendarObj);
     setExpanded(true);
   };
 
   const _handlePressDay = (_date: TDate) => {
-    CustomCalendarRef.getSelectedDay = () => _date;
+    CustomCalendarRef[id].getSelectedDay = () => _date;
 
     setSelectedDay(_date);
     handlePress(_date);
@@ -86,7 +78,8 @@ export const CustomCalendar = ({
 
   return (
     <View style={styles.container} ref={element => {
-      CustomCalendarRef = {
+      CustomCalendarRef[id] = {
+        id,
         current: element,
         expand: () => setExpanded(true),
         collapse: () => setExpanded(false),

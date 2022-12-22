@@ -23,15 +23,18 @@ export interface IDayName {
 };
 
 export interface ICustomCalendarRef {
-    current: ViewComponent | null;
-    expand(): void;
-    collapse(): void;
-    isExpanded(): boolean;
-    getCalendarDate(): ICalendar | {};
-    getSelectedDay(): TDate | {};
-    navigatePrev(): void;
-    navigateNext(): void;
-    navigateMonth(month: TMonthNumber, year?: string | number): void;
+    [key: string]: {
+        id: string;
+        current: ViewComponent | null;
+        expand(): void;
+        collapse(): void;
+        isExpanded(): boolean;
+        getCalendarDate(): ICalendar | {};
+        getSelectedDay(): TDate | {};
+        navigatePrev(): void;
+        navigateNext(): void;
+        navigateMonth(month: TMonthNumber, year?: string | number): void;
+    };
 };
 
 export interface ICustomHeaderProps {
@@ -54,6 +57,7 @@ export interface ICustomDayProps {
 }
 
 export interface ICustomCalendarProps {
+    id?: string;
     date?: Date;
     offsetMonth?: boolean;
     expand?: boolean;
