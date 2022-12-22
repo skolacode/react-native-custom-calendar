@@ -50,6 +50,7 @@ const App = () => {
 
 | Name         | Type         | Required | Default | Description                                                      |
 | ------------ | ------------ | -------- | ------- | ---------------------------------------------------------------- |
+| id           | string       | No       | random  | ID of the component as the reference for its ref                 |
 | date         | Date         | No       | today   | The initial date to display active calendar                      |
 | offsetMonth  | Boolean      | No       | true    | Show the offset previous / next month within Monday to Sunday    |
 | expand       | Boolean      | No       | true    | The state of the calendar view, either expanded or collapsed     |
@@ -70,14 +71,14 @@ import {CustomCalendar, CustomCalendarRef} from '@skolacode/react-native-custom-
 
 const App = () => {
   useEffect(() => {
-    CustomCalendarRef.collapse();
+    CustomCalendarRef.calendarA.collapse();
 
-    console.log(CustomCalendarRef.isExpanded()); // false
+    console.log(CustomCalendarRef.calendarA.isExpanded()); // false
   }, []);
   
   return (
     <View>
-      <CustomCalendar />
+      <CustomCalendar id={'calendarA'} />
     </View>
   );
 };
@@ -87,6 +88,7 @@ Available properties & methods after component has mounted:
 
 | Name            | Type         | Return  | Description                                                 |
 | --------------- | ------------ | ------- | ----------------------------------------------------------- |
+| id              | string       | string  | Reference ID of the component                               |
 | current         | ReactElement | Object  | The calendar element itself                                 |
 | expand          | Function     | Void    | Update the calendar to expanded state                       |
 | collapse        | Function     | Void    | Update the calendar to collapsed state                      |
