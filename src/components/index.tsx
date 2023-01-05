@@ -76,6 +76,10 @@ export const CustomCalendar = ({
     handlePress(_date);
   };
 
+  const getFirstWeek = calendarObj.calendar?.[0] ?? [];
+  const lastDayOfWeek = getFirstWeek?.[getFirstWeek.length - 1] ?? {};
+  const maxWeekRow = lastDayOfWeek?.isCurrentMonth && lastDayOfWeek?.day === 1 ? 6 : 5;
+
   return (
     <View style={styles.container} ref={element => {
       CustomCalendarRef[id] = {
@@ -124,7 +128,7 @@ export const CustomCalendar = ({
 
         {calendarObj.calendar.map((week, weekNo) => {
           const isThisWeek: boolean = calendarObj.year === year && calendarObj.month === month && weekNo === currentWeekIndex;
-          let toRenderWeek: boolean = weekNo < 5;
+          let toRenderWeek: boolean = weekNo < maxWeekRow;
           if (!expanded) {
             const showFocusedWeek: boolean = calendarObj.month === month ? isThisWeek : weekNo === 0;
             toRenderWeek = toRenderWeek && showFocusedWeek;
