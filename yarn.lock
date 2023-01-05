@@ -2036,10 +2036,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@skolacode/calendar-js@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@skolacode/calendar-js/-/calendar-js-1.0.0.tgz#692d0a4525271c69415c8b05281558ccf4c37b3b"
-  integrity sha512-UUhs56QUfYIi5kNLrVz3FG56gDYdVKXCr8x9FFmaAMESeNVwTZvlh4PEX+FvqgUCeQQTVyRa78MYa48tDCUApQ==
+"@skolacode/calendar-js@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@skolacode/calendar-js/-/calendar-js-1.0.1.tgz#1104723cb93ef0b843e830a5b15a89b47066775f"
+  integrity sha512-dpQfJPrc2INbtesIkhCAlHo7SvERytjNVAoTRAPSA2QvLk/V0RUE4MS43Sr2ovCMFnJOtVpp6H3hg44BT4/MXg==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
