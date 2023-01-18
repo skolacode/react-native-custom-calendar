@@ -33,7 +33,7 @@
   },
 
   "dependencies": {
-    "@skolacode/calendar-js": "^1.0.1"
+    "@skolacode/calendar-js": "^1.0.2"
   },
   "peerDependencies": {
     "react": "*",
