@@ -76,9 +76,14 @@ export const CustomCalendar = ({
     handlePress(_date);
   };
 
-  const getFirstWeek = calendarObj.calendar?.[0] ?? [];
-  const lastDayOfWeek = getFirstWeek?.[getFirstWeek.length - 1] ?? {};
-  const maxWeekRow = lastDayOfWeek?.isCurrentMonth && lastDayOfWeek?.day === 1 ? 6 : 5;
+  let maxWeekRow = 6;
+  calendarObj?.calendar?.forEach((week, weekIndex) => {
+    week.forEach((d) => {
+      if (d.isCurrentMonth) {
+        maxWeekRow = weekIndex + 1;
+      }
+    });
+  });
 
   return (
     <View style={styles.container} ref={element => {

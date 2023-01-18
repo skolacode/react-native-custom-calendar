@@ -1,6 +1,6 @@
 {
   "name": "@skolacode/react-native-custom-calendar",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "license": "MIT",
   "description": "This will be an awesome custom calendar for React Native",
   "homepage": "https://github.com/skolacode/react-native-custom-calendar#readme",
@@ -33,7 +33,7 @@
   },
 
   "dependencies": {
-    "@skolacode/calendar-js": "^1.0.1"
+    "@skolacode/calendar-js": "^1.0.2"
   },
   "peerDependencies": {
     "react": "*",
