@@ -100,7 +100,11 @@ export const CustomCalendar = ({
         navigateMonth: (_month, _year = year) => {
           const parseMonth = parseInt(`${_month}`, 10);
           const parseYear = parseInt(`${_year}`, 10);
-          setCalendarObj(getCalendar(parseMonth - 1, parseYear));
+          const getCalendarObj = getCalendar(parseMonth - 1, parseYear);
+          CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
+          CustomCalendarRef[id].isExpanded = () => true;
+
+          setCalendarObj(getCalendarObj);
           setExpanded(true);
         },
       };
