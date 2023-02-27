@@ -25,6 +25,8 @@ export interface IDayName {
 export interface ICustomCalendarRef {
     [key: string]: {
         id: string;
+        date: Date | string;
+        focusWeek: number;
         current: ViewComponent | null;
         expand(): void;
         collapse(): void;
@@ -60,8 +62,11 @@ export interface ICustomCalendarProps {
     id?: string;
     date?: Date;
     offsetMonth?: boolean;
-    expand?: boolean;
     showNav?: boolean;
+    expand?: boolean;
+    expandHeight?: number;
+    expandAnims?: string[];
+    onExpanded?(): void;
     customHeader?(props: ICustomHeaderProps): ReactElement;
     customDay?(props: ICustomDayProps): ReactElement;
     handlePress?(date: TDate): void;
