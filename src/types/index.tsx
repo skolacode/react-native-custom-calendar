@@ -25,12 +25,11 @@ export interface IDayName {
 export interface ICustomCalendarRef {
     [key: string]: {
         id: string;
-        date: Date | string;
-        focusWeek: number;
         current: ViewComponent | null;
         expand(): void;
         collapse(): void;
         isExpanded(): boolean;
+        getFocusWeek(): number;
         getCalendarDate(): ICalendar | {};
         getSelectedDay(): TDate | {};
         navigatePrev(): void;
@@ -53,6 +52,7 @@ export interface ICustomDayProps {
     day: string | number;
     month: string | number;
     year: string | number;
+    weekNo: number;
     styles: TNamedStyles[];
     show: boolean;
     handlePress(date: TDate): void;
