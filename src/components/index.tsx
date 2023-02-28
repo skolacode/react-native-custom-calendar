@@ -36,6 +36,7 @@ export const CustomCalendar = ({
   expandHeight = 375,
   expandAnims = [],
   onExpanded = () => {},
+  onCollapsed = () => {},
   customHeader = ({date, month, year, Header, Prev, Next}: ICustomHeaderProps) => <RenderHeader {...{date, Header, Prev, Next}} />,
   customDay = ({date, day, month, year, weekNo, styles, show, handlePress}: ICustomDayProps) => <RenderDay {...{date, styles, show, handlePress}} />,
   handlePress = (date: TDate) => {},
@@ -62,10 +63,9 @@ export const CustomCalendar = ({
   }
 
   const _handleNavigatePrev = () => {
-    const _focusWeek = CustomCalendarRef[id].isExpanded() ? 0 : CustomCalendarRef[id].getFocusWeek();
     const lastWeekOfPrevMonth = getLastWeekIndex(calendarObj.previous.month, calendarObj.previous.year);
 
-    if (CustomCalendarRef[id].isExpanded() || _focusWeek === 0) {
+    if (expanded || focusWeek === 0) {
       const getCalendarObj = getCalendar(calendarObj.previous.month, calendarObj.previous.year);
       CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
       setCalendarObj(getCalendarObj);
@@ -73,25 +73,23 @@ export const CustomCalendar = ({
       setYear(getCalendarObj.year);
     }
 
-    const getFocusWeek = _focusWeek === 0 ? lastWeekOfPrevMonth : _focusWeek - 1;
+    const getFocusWeek = focusWeek === 0 ? lastWeekOfPrevMonth : focusWeek - 1;
     CustomCalendarRef[id].getFocusWeek = () => getFocusWeek;
     setFocusWeek(getFocusWeek);
   };
 
   const _handleNavigateNext = () => {
-    const _focusWeek = CustomCalendarRef[id].isExpanded() ? 0 : CustomCalendarRef[id].getFocusWeek();
-    const lastWeekOfNextMonth = getLastWeekIndex(calendarObj.next.month, calendarObj.next.year);
+    const lastWeekThisMonth = getLastWeekIndex(calendarObj.month, calendarObj.year);
 
-    if (CustomCalendarRef[id].isExpanded() || _focusWeek >= lastWeekOfNextMonth) {
+    if (expanded || focusWeek === lastWeekThisMonth) {
       const getCalendarObj = getCalendar(calendarObj.next.month, calendarObj.next.year);
       CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
       setCalendarObj(getCalendarObj);
       setMonth(getCalendarObj.month);
       setYear(getCalendarObj.year);
-
     }
 
-    const getFocusWeek = _focusWeek >= lastWeekOfNextMonth ? 0 : _focusWeek + 1;
+    const getFocusWeek = focusWeek === lastWeekThisMonth ? 0 : focusWeek + 1;
     CustomCalendarRef[id].getFocusWeek = () => getFocusWeek;
     setFocusWeek(getFocusWeek);
   };
@@ -208,6 +206,7 @@ export const CustomCalendar = ({
             onExpanded();
           } else {
             _handleCollapse();
+            onCollapsed();
           }
         }}
         style={[styles.dayContainer]}

@@ -67,6 +67,7 @@ export interface ICustomCalendarProps {
     expandHeight?: number;
     expandAnims?: string[];
     onExpanded?(): void;
+    onCollapsed?(): void;
     customHeader?(props: ICustomHeaderProps): ReactElement;
     customDay?(props: ICustomDayProps): ReactElement;
     handlePress?(date: TDate): void;
