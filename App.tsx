@@ -7,7 +7,7 @@ import {CustomCalendar} from './src/components';
 export default function App() {
   return (
     <View style={styles.container}>
-      <CustomCalendar />
+      <CustomCalendar id={'customCalendar'} expand={true} />
     </View>
   );
 };
