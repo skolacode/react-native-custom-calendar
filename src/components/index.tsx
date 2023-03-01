@@ -33,8 +33,8 @@ export const CustomCalendar = ({
   offsetMonth = true,
   showNav = true,
   expand = true,
-  expandHeight = 375,
-  expandAnims = [],
+  expandHeight = 410,
+  expandAnims = ['grow'],
   onExpanded = () => {},
   onCollapsed = () => {},
   customHeader = ({date, month, year, Header, Prev, Next}: ICustomHeaderProps) => <RenderHeader {...{date, month, year, Header, Prev, Next}} />,
@@ -51,24 +51,29 @@ export const CustomCalendar = ({
   const [calendarObj, setCalendarObj] = useState<ICalendar>(getCalendar(month, year));
 
   const _handleExpand = () => {
+    onExpanded();
     CustomCalendarRef[id].isExpanded = () => true;
     setExpanded(true);
   }
 
   const _handleCollapse = () => {
+    const collapsed = onCollapsed();
+    const weekNo = typeof collapsed === 'number' ? collapsed : 0;
     CustomCalendarRef[id].isExpanded = () => false;
     setExpanded(false);
 
-    CustomCalendarRef[id].getFocusWeek = () => 0;
-    setFocusWeek(0);
+    CustomCalendarRef[id].getFocusWeek = () => weekNo;
+    setFocusWeek(weekNo);
   }
 
   const _handleNavigatePrev = () => {
-    const _focusWeek = CustomCalendarRef[id].getFocusWeek();
-    const lastWeekOfPrevMonth = getLastWeekIndex(calendarObj.previous.month, calendarObj.previous.year);
+    const _isExpanded: boolean = CustomCalendarRef[id].isExpanded();
+    const _calendarObj: any = CustomCalendarRef[id].getCalendarDate();
+    const _focusWeek: number = CustomCalendarRef[id].getFocusWeek();
+    const lastWeekOfPrevMonth = getLastWeekIndex(_calendarObj.previous.month, _calendarObj.previous.year);
 
-    if (CustomCalendarRef[id].isExpanded() || _focusWeek === 0) {
-      const getCalendarObj = getCalendar(calendarObj.previous.month, calendarObj.previous.year);
+    if (_isExpanded || _focusWeek === 0) {
+      const getCalendarObj = getCalendar(_calendarObj.previous.month, _calendarObj.previous.year);
       CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
       setCalendarObj(getCalendarObj);
     }
@@ -79,11 +84,13 @@ export const CustomCalendar = ({
   };
 
   const _handleNavigateNext = () => {
-    const _focusWeek = CustomCalendarRef[id].getFocusWeek();
-    const lastWeekThisMonth = getLastWeekIndex(calendarObj.month, calendarObj.year);
+    const _isExpanded: boolean = CustomCalendarRef[id].isExpanded();
+    const _calendarObj: any = CustomCalendarRef[id].getCalendarDate();
+    const _focusWeek: number = CustomCalendarRef[id].getFocusWeek();
+    const lastWeekThisMonth = getLastWeekIndex(_calendarObj.month, _calendarObj.year);
 
-    if (CustomCalendarRef[id].isExpanded() || _focusWeek === lastWeekThisMonth) {
-      const getCalendarObj = getCalendar(calendarObj.next.month, calendarObj.next.year);
+    if (_isExpanded || _focusWeek === lastWeekThisMonth) {
+      const getCalendarObj = getCalendar(_calendarObj.next.month, _calendarObj.next.year);
       CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
       setCalendarObj(getCalendarObj);
     }
@@ -93,16 +100,15 @@ export const CustomCalendar = ({
     setFocusWeek(getFocusWeek);
   };
 
-  const _handleNavigateMonth = (_month: TMonthNumber, _year: string | number = year) => {
+  const _handleNavigateMonth = (_month: TMonthNumber, _year: string | number = year, _weekNo: number = 0) => {
     const parseMonth = parseInt(`${_month}`, 10);
     const parseYear = parseInt(`${_year}`, 10);
     const getCalendarObj = getCalendar(parseMonth - 1, parseYear);
     CustomCalendarRef[id].getCalendarDate = () => getCalendarObj;
     setCalendarObj(getCalendarObj);
 
-    const getFocusWeek = 0;
-    CustomCalendarRef[id].getFocusWeek = () => getFocusWeek;
-    setFocusWeek(getFocusWeek);
+    CustomCalendarRef[id].getFocusWeek = () => _weekNo;
+    setFocusWeek(_weekNo);
   };
 
   const _handlePressDay = (_date: TDate) => {
@@ -137,7 +143,7 @@ export const CustomCalendar = ({
   expandAnims.forEach(item => {
     switch (item) {
       case 'grow':
-        anim.grow = {transform: [{scale: containerScale}]};
+        anim.grow = {transform: [{scaleY: containerScale}]};
         break;
       default: break;
     }
@@ -158,20 +164,34 @@ export const CustomCalendar = ({
     ]).start();
   }, []);
 
+  const [scaleInnerAnimation] = useState(new Animated.Value(0));
+  const containerScaleInner = scaleInnerAnimation.interpolate({
+    inputRange: [28, 32],
+    outputRange: [28, 32],
+  });
+  
+  useEffect(() => {
+    Animated.timing(scaleInnerAnimation, {
+      toValue: !expanded ? 28 : 32,
+      duration: 100,
+      useNativeDriver: false,
+    }).start();
+  }, [expanded]);
+
   return (
     <Animated.View style={[styles.container, {height: expandHeight, opacity: containerOpacity, ...anim.grow}]}
       ref={(element: any) => {
         CustomCalendarRef[id] = {
           id,
           current: element,
-          expand: () => _handleExpand(),
-          collapse: () => _handleCollapse(),
+          expand: _handleExpand,
+          collapse: _handleCollapse,
           isExpanded: () => expanded,
           getFocusWeek: () => focusWeek,
           getCalendarDate: () => calendarObj,
           getSelectedDay: () => selectedDay,
-          navigatePrev: () => _handleNavigatePrev(),
-          navigateNext: () => _handleNavigateNext(),
+          navigatePrev: _handleNavigatePrev,
+          navigateNext: _handleNavigateNext,
           navigateMonth: _handleNavigateMonth,
         };
       }}>
@@ -195,15 +215,14 @@ export const CustomCalendar = ({
       </View>
 
       <ScrollView
+        showsVerticalScrollIndicator={false}
         scrollEventThrottle={400}
         onMomentumScrollBegin={event => {
           const direction = event.nativeEvent.contentOffset.y <= 0 ? 'bottom' : 'up';
           if (direction === 'bottom') {
             _handleExpand();
-            onExpanded();
           } else {
             _handleCollapse();
-            onCollapsed();
           }
         }}
         style={[styles.dayContainer]}
@@ -215,17 +234,16 @@ export const CustomCalendar = ({
         </View>
 
         {calendarObj.calendar.map((week, weekNo) => {
-          const isExpanded = CustomCalendarRef?.[id] ? CustomCalendarRef[id].isExpanded() : expanded;
           let toRenderWeek: boolean = weekNo < maxWeekRow;
 
-          if (!isExpanded) {
+          if (!expanded) {
             const showFocusedWeek: boolean = weekNo === focusWeek;
             toRenderWeek = toRenderWeek && showFocusedWeek;
           }
 
           if (toRenderWeek) {
             return (
-              <View key={`weekRow-${weekNo}`} style={styles.weekRow}>
+              <Animated.View key={`weekRow-${weekNo}`} style={[styles.weekRow, {height: containerScaleInner}]}>
                 {week.map((_date, _index) => {
                   const toRenderDay: boolean = !showOffsetMonth ? _date.isCurrentMonth : true;
                   const dayEachStyles: TNamedStyles[] = [styles.dayEach];
@@ -262,7 +280,7 @@ export const CustomCalendar = ({
                     </Fragment>
                   )
                 })}
-              </View>
+              </Animated.View>
             );
           }
         })}
