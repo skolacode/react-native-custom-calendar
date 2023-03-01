@@ -33,7 +33,7 @@ export const CustomCalendar = ({
   offsetMonth = true,
   showNav = true,
   expand = true,
-  expandHeight = 410,
+  expandHeight = 420,
   expandAnims = ['grow'],
   onExpanded = () => {},
   onCollapsed = () => {},
@@ -56,9 +56,16 @@ export const CustomCalendar = ({
     setExpanded(true);
   }
 
-  const _handleCollapse = () => {
+  const _handleCollapse = (weekNo: number = 0) => {
     const collapsed = onCollapsed();
-    const weekNo = typeof collapsed === 'number' ? collapsed : 0;
+    if (typeof collapsed === 'number') {
+      weekNo = collapsed;
+    } else if ((selectedDay as TDate).day) {
+      const _date: TDate = (selectedDay as TDate);
+      weekNo = getCurrentWeekIndex(new Date(_date.date.getFullYear(), _date.date.getMonth(), _date.day - 1));
+      weekNo = _date.day > 1 ? weekNo : 0;
+    }
+
     CustomCalendarRef[id].isExpanded = () => false;
     setExpanded(false);
 
@@ -216,6 +223,7 @@ export const CustomCalendar = ({
 
       <ScrollView
         showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
         scrollEventThrottle={400}
         onMomentumScrollBegin={event => {
           const direction = event.nativeEvent.contentOffset.y <= 0 ? 'bottom' : 'up';

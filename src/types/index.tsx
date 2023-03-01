@@ -27,7 +27,7 @@ export interface ICustomCalendarRef {
         id: string;
         current: ViewComponent | null;
         expand(): void;
-        collapse(): void;
+        collapse(weekNo: number): void;
         isExpanded(): boolean;
         getFocusWeek(): number;
         getCalendarDate(): ICalendar | {};
