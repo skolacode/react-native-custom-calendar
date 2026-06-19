@@ -72,7 +72,6 @@
     "android": "react-native run-android",
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "pod-install": "cd ios && pod install && cd ..",
-    "pod-install-m1": "cd ios && arch -x86_64 pod install && cd ..",
     "postinstall": "echo \"waste our time\""
   }
 }
